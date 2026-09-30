@@ -1,0 +1,14 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "CSS build scripts for the ui.",
+  "scripts": {
+    "watch-css": "npx @tailwindcss/cli -i ./src/index.css -o ../static/css/index.css --watch",
+    "build-css": "npx @tailwindcss/cli -i ./src/index.css -o ../static/css/index.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "tailwindcss": "^4.3.3"
+  }
+}
