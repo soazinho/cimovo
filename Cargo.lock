@@ -406,7 +406,6 @@ dependencies = [
  "actix-web",
  "env_logger",
  "ignore",
- "lazy_static",
  "pulldown-cmark",
  "serde",
  "serde_json",

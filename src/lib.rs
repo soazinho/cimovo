@@ -1,26 +1,22 @@
 use actix_files::Files;
 use actix_web::{App, HttpResponse, HttpServer, dev::Server, middleware, web};
 use std::net::TcpListener;
+use std::sync::LazyLock;
 use tera::Tera;
 
 pub mod handlers;
 
-#[macro_use]
-extern crate lazy_static;
-
-lazy_static! {
-    pub static ref TEMPLATES: Tera = {
-        let mut tera = match Tera::new("templates/**/*.html") {
-            Ok(t) => t,
-            Err(e) => {
-                println!("Parsing error(s): {}", e);
-                ::std::process::exit(1);
-            }
-        };
-        tera.autoescape_on(vec![".html", ".sql"]);
-        tera
+pub static TEMPLATES: LazyLock<Tera> = LazyLock::new(|| {
+    let mut tera = match Tera::new("templates/**/*.html") {
+        Ok(t) => t,
+        Err(e) => {
+            println!("Parsing error(s): {}", e);
+            ::std::process::exit(1);
+        }
     };
-}
+    tera.autoescape_on(vec![".html", ".sql"]);
+    tera
+});
 
 pub fn start_blog(listener: TcpListener) -> Result<Server, std::io::Error> {
     let srv = HttpServer::new(move || {
